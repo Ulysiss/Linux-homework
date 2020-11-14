@@ -117,8 +117,10 @@ int PrintMenuOS()
     return 0;
 }
 
+
 int Quit(int argc, char *argv[])
 {
+    // 通过int ExecuteMenu()中增加if(p->handler == Quit){return 0;}出循环
     /* add XXX clean ops */
 }
 
@@ -138,15 +140,20 @@ int TimeAsm(int argc, char *argv[])
     struct tm *t;
     asm volatile(
         "mov $0,%%ebx\n\t"
-        "mov $0xd,%%eax\n\t" 
-        "int $0x80\n\t" 
-        "mov %%eax,%0\n\t"  
-        : "=m" (tt) 
+        "mov $0xd,%%eax\n\t"
+        "int $0x80\n\t"
+        "mov %%eax,%0\n\t"
+        : "=m" (tt)
     );
     t = localtime(&tt);
     printf("time:%d:%d:%d:%d:%d:%d\n",t->tm_year+1900, t->tm_mon, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
     return 0;
 }
+int hello(int argc, char *argv[]){
+	printf("hello 20209313\n");
+    return 0;
+}
+
 int main()
 {
     PrintMenuOS();
@@ -155,6 +162,7 @@ int main()
     MenuConfig("quit","Quit from MenuOS",Quit);
     MenuConfig("time","Show System Time",Time);
     MenuConfig("time-asm","Show System Time(asm)",TimeAsm);
+    MenuConfig("hello","bring happiness to you",hello);
     ExecuteMenu();
 }
 

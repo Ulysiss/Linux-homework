@@ -29,6 +29,7 @@
 tLinkTable * head = NULL;
 int Help();
 int Quit();
+int hello();
 
 #define CMD_MAX_LEN 		1024
 #define CMD_MAX_ARGV_NUM 	32
@@ -53,9 +54,9 @@ int SearchConditon(tLinkTableNode * pLinkTableNode,void * arg)
     tDataNode * pNode = (tDataNode *)pLinkTableNode;
     if(strcmp(pNode->cmd, cmd) == 0)
     {
-        return  SUCCESS;  
+        return  SUCCESS;
     }
-    return FAILURE;	       
+    return FAILURE;
 }
 /* find a cmd in the linklist and return the datanode pointer */
 tDataNode* FindCmd(tLinkTable * head, char * cmd)
@@ -65,7 +66,7 @@ tDataNode* FindCmd(tLinkTable * head, char * cmd)
     {
         if(!strcmp(pNode->cmd, cmd))
         {
-            return  pNode;  
+            return  pNode;
         }
         pNode = (tDataNode*)GetNextLinkTableNode(head,(tLinkTableNode *)pNode);
     }
@@ -87,8 +88,10 @@ int ShowAllCmd(tLinkTable * head)
 int Help(int argc, char *argv[])
 {
     ShowAllCmd(head);
-    return 0; 
+    return 0;
 }
+
+
 
 int SetPrompt(char * p)
 {
@@ -115,9 +118,9 @@ int MenuConfig(char * cmd, char * desc, int (*handler)())
     pNode = (tDataNode*)malloc(sizeof(tDataNode));
     pNode->cmd = cmd;
     pNode->desc = desc;
-    pNode->handler = handler; 
+    pNode->handler = handler;
     AddLinkTableNode(head,(tLinkTableNode *)pNode);
-    return 0; 
+    return 0;
 }
 
 
@@ -157,9 +160,13 @@ int ExecuteMenu()
             continue;
         }
         printf("%s - %s\n", p->cmd, p->desc);
-        if(p->handler != NULL) 
-        { 
+        if(p->handler == Quit){
+            return 0;
+        }
+
+        else if(p->handler != NULL)
+        {
             p->handler(argc, argv);
         }
     }
-} 
+}

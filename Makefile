@@ -3,17 +3,17 @@
 #
 
 CC_PTHREAD_FLAGS			 = -lpthread
-CC_FLAGS                     = -c 
+CC_FLAGS                     = -c
 CC_OUTPUT_FLAGS				 = -o
 CC                           = gcc
 RM                           = rm
 RM_FLAGS                     = -f
 
-TARGET  =   test
+TARGET  =   test_209313
 OBJS    =   linktable.o  menu.o test.o
 
 all:	$(OBJS)
-	$(CC) $(CC_OUTPUT_FLAGS) $(TARGET) $(OBJS) 
+	$(CC) $(CC_OUTPUT_FLAGS) $(TARGET) $(OBJS)
 rootfs:
 	gcc -o init linktable.c menu.c test.c -m32 -static -lpthread
 	gcc -o hello hello.c -m32 -static
